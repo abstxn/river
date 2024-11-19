@@ -1,5 +1,4 @@
 import Link from "next/link";
-import '../globals.css'
 
 export default function NavBar() {
   return (
@@ -13,9 +12,6 @@ export default function NavBar() {
         <div className="space-x-4">
           <Link href="/">
             <span className="hover:text-gray-400">Home</span>
-          </Link>
-          <Link href="/test/user-service">
-            <span className="hover:text-gray-400">Test-User-Service</span>
           </Link>
           <Link href="/login">
             <span className="hover:text-gray-400">Login</span>

@@ -9,5 +9,5 @@ app.get('/', (req: Request, res: Response) => {
 
 const PORT = 4000;
 app.listen(PORT, () => {
-    console.log(`user-service running on http://localhost:${PORT}`);
+    console.log(`user-service running on port ${PORT}`);
 });

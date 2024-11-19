@@ -27,7 +27,7 @@ export default function Page() {
   // Render the message or an error message
   return (
     <div>
-      <h1>Testing user-service page</h1>
+      <h1>PAGE: user-service</h1>
       {error ? <p style={{ color: "red" }}>{error}</p> : <p>{message}</p>}
     </div>
   );

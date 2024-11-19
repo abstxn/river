@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000" # Expose frontend locally
+    # depends_on:
+    #   - gateway
+
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "4000:4000" # Expose user-service locally
+    # depends_on:
+    #   - gateway
+
+  # gateway:
+  #   build: ./gateway
+  #   ports:
+  #     - "80:80" # Expose API Gateway locally
+  #   depends_on:
+  #     - frontend
+  #     - user-service

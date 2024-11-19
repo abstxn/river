@@ -3,11 +3,17 @@ services:
     build: ./frontend
     ports:
       - 3000:3000 # Expose frontend locally
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   user-service:
     build: ./services/user-service
     ports:
       - 4000:4000 # Expose user-service locally
+    volumes:
+      - ./services/user-service:/app
+      - /app/node_modules
 
   gateway:
     build: ./gateway

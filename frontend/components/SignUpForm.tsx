@@ -1,11 +1,10 @@
 'use client'
 
-import { useFormStatus } from 'react-dom'
 import { useActionState } from 'react'
 import { signUp } from '@/actions/auth'
 
 export function SignUpForm() {
-  const [state, action] = useActionState(signUp, undefined)
+  const [state, action, isPending] = useActionState(signUp, undefined)
 
   return (
     <form
@@ -72,25 +71,24 @@ export function SignUpForm() {
           </div>
         )}
       </div>
-      <SubmitButton />
+      <SubmitButton isPending={isPending} />
     </form>
   )
 }
 
-function SubmitButton() {
-  const { pending } = useFormStatus()
+function SubmitButton({ isPending }: { isPending:boolean }) {
 
   return (
     <button
-      disabled={pending}
+      disabled={isPending}
       type="submit"
       className={`w-full p-2 text-white rounded ${
-        pending
+        isPending
           ? 'bg-gray-400 cursor-not-allowed'
           : 'bg-blue-500 hover:bg-blue-600'
       }`}
     >
-      {pending ? 'Submitting...' : 'Sign Up'}
+      {isPending ? 'Submitting...' : 'Sign Up'}
     </button>
   )
 }

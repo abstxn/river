@@ -15,6 +15,14 @@ services:
       - ./services/user-service:/app
       - /app/node_modules
 
+  # user-db:
+  #   image: mongo:latest
+  #   container_name: user-db
+  #   volumes:  # TODO: Add db-init.js script
+  #     - user-db-data:/data/db
+  #   ports:
+  #     - 27017:27017
+
   gateway:
     build: ./gateway
     ports:

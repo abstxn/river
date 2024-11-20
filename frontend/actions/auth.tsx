@@ -1,8 +1,9 @@
 "use server"
 
+import { redirect } from "next/navigation";
 import { SignupFormSchema, FormState } from "@/lib/definitions";
 import { createSession } from "@/lib/session";
-import { redirect } from "next/navigation";
+import bcrypt from 'bcryptjs';
 
 export async function signUp(state: FormState, formData: FormData) {
 
@@ -10,7 +11,7 @@ export async function signUp(state: FormState, formData: FormData) {
 
   // Validate fields
   const validatedFields = SignupFormSchema.safeParse({
-    name: formData.get('name'),
+    username: formData.get('username'),
     email: formData.get('email'),
     password: formData.get('password'),
   })
@@ -22,13 +23,29 @@ export async function signUp(state: FormState, formData: FormData) {
     }
   }
 
-  // TODO:
-  // 1. Hash the password
-  // 2. Make a call to auth-service to sign up
+  // Hash the password
+  const salt = bcrypt.genSaltSync(10)
+  const passwordHash = bcrypt.hashSync(validatedFields.data.password, salt);
 
-  // 3. Create user session
-  await createSession(validatedFields.data.name);
+  // TODO: Make a call to auth-service to sign up
+  const username = validatedFields.data.username;
+  const email = validatedFields.data.email;
+  const response = await fetch(`${process.env.GATEWAY_URL}/api/auth-service/sign-up`,
+    {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ username, email, passwordHash })
+    });
 
-  // 4. Redirect the user
+  // Handle unhappy routes
+  if (!response.ok) {
+  }
+
+  // Create user session
+  await createSession(validatedFields.data.username);
+
+  // Redirect the user
   redirect('/')
 }
+
+// TODO: Implement login method

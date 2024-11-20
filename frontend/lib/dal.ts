@@ -16,11 +16,12 @@ export const verifySession = cache(async () => {
   return { isAuth: true, userId: session.userId };
 });
 
+// TODO: Remove once done testing
 export const authGet = cache(async () => {
   const session = await verifySession();
   if (!session) return null;
 
-  // TODO: Some action that requires authentication
+  // Some action that requires authentication
 
   return "success";
 });

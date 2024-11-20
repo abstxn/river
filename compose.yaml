@@ -17,6 +17,14 @@ services:
     environment:
       - PORT=4000
 
+  auth-db:
+    image: mongo:latest
+    container_name: auth-db
+    volumes:
+      - auth-db-data:/data/db
+    ports:
+      - 4100:27017
+
   user-service:
     build: ./services/user-service
     ports:
@@ -27,15 +35,10 @@ services:
     environment:
       - PORT=4001
 
-  # user-db:
-  #   image: mongo:latest
-  #   container_name: user-db
-  #   volumes:  # TODO: Add db-init.js script
-  #     - user-db-data:/data/db
-  #   ports:
-  #     - 27017:27017
-
   gateway:
     build: ./gateway
     ports:
       - 80:80
+
+volumes:
+  auth-db-data:

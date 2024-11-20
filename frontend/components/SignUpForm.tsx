@@ -13,19 +13,19 @@ export function SignUpForm() {
     >
       <div>
         <label
-          htmlFor="name"
+          htmlFor="username"
           className="block text-sm font-medium text-gray-700"
         >
-          Name
+          Username
         </label>
         <input
-          id="name"
-          name="name"
-          placeholder="Name"
+          id="username"
+          name="username"
+          placeholder="Username"
           className="w-full p-2 mt-1 border border-gray-300 rounded"
         />
-        {state?.errors?.name && (
-          <p className="text-sm text-red-500">{state.errors.name}</p>
+        {state?.errors?.username && (
+          <p className="text-sm text-red-500">{state.errors.username}</p>
         )}
       </div>
 

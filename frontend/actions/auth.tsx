@@ -27,10 +27,11 @@ export async function signUp(state: FormState, formData: FormData) {
   const salt = bcrypt.genSaltSync(10)
   const passwordHash = bcrypt.hashSync(validatedFields.data.password, salt);
 
-  // TODO: Make a call to auth-service to sign up
+  // Make a call to auth-service to sign up
   const username = validatedFields.data.username;
   const email = validatedFields.data.email;
-  const response = await fetch(`${process.env.GATEWAY_URL}/api/auth-service/sign-up`,
+  const response = await fetch(
+    `${process.env.GATEWAY_URL}/api/auth-service/sign-up`,
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -39,6 +40,7 @@ export async function signUp(state: FormState, formData: FormData) {
 
   // Handle unhappy routes
   if (!response.ok) {
+    // TODO: Handle non-ok cases from /api/auth-service/sign-up
   }
 
   // Create user session

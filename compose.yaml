@@ -16,14 +16,13 @@ services:
       - /app/node_modules
     environment:
       - PORT=4000
+      - DB_URI=mongodb://auth-service-db:27017/auth-service-db
 
-  auth-db:
+  auth-service-db:
     image: mongo:latest
-    container_name: auth-db
+    container_name: auth-service-db
     volumes:
-      - auth-db-data:/data/db
-    ports:
-      - 4100:27017
+      - auth-service-db-vol:/data/db
 
   user-service:
     build: ./services/user-service
@@ -41,4 +40,4 @@ services:
       - 80:80
 
 volumes:
-  auth-db-data:
+  auth-service-db-vol:

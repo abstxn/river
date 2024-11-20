@@ -13,5 +13,5 @@ app.get('/', (req: Request, res: Response) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log(`user-service running on port ${PORT}`);
+    console.log(`auth-service running on port ${PORT}`);
 });

@@ -19,6 +19,9 @@ export default function NavBar() {
           <Link href="/sign-up">
             <span className="hover:text-gray-400">Sign Up</span>
           </Link>
+          <Link href="/test">
+            <span className="hover:text-gray-400">Test</span>
+          </Link>
         </div>
       </div>
     </nav>

@@ -18,3 +18,11 @@ export async function createUser(
   passwordHash: String) {
   return new UserModel({ username, email, passwordHash }).save();
 }
+
+export async function getUserByUsername(username: String) {
+  return UserModel.findOne({ username })
+}
+
+export async function getUserByEmail(email: String) {
+  return UserModel.findOne({ email })
+}

@@ -4,7 +4,7 @@ import { useActionState } from 'react'
 import { signUp } from '@/actions/auth'
 
 export function SignUpForm() {
-  const [state, action, isPending] = useActionState(signUp, undefined)
+  const [state, action, isPending] = useActionState(signUp, undefined);
 
   return (
     <form
@@ -72,6 +72,9 @@ export function SignUpForm() {
         )}
       </div>
       <SubmitButton isPending={isPending} />
+      {state?.errors?.service && (
+        <p className="text-sm text-red-500">{state.errors.service}</p>
+      )}
     </form>
   )
 }

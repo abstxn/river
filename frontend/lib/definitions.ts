@@ -5,6 +5,7 @@ export const SignupFormSchema = z.object({
     .string()
     .min(1, { message: 'Username must be at least 1 characters long.' })
     .trim(),
+    // TODO: Is there potential issue with trimming after the min check?
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
   password: z
     .string()

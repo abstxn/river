@@ -5,6 +5,13 @@ import { SignupFormSchema, FormState } from "@/lib/definitions";
 import { createSession } from "@/lib/session";
 import bcrypt from 'bcryptjs';
 
+type SignUpErrors = {
+  username?: string[] | undefined;
+  email?: string[] | undefined;
+  password?: string[] | undefined;
+  service?: string | undefined;
+}
+
 export async function signUp(state: FormState, formData: FormData) {
 
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
@@ -18,9 +25,8 @@ export async function signUp(state: FormState, formData: FormData) {
 
   // Return early if any fields are invalid
   if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    }
+    const signUpErrors: SignUpErrors = validatedFields.error.flatten().fieldErrors;
+    return { errors: signUpErrors };
   }
 
   // Hash the password
@@ -40,7 +46,11 @@ export async function signUp(state: FormState, formData: FormData) {
 
   // Handle unhappy routes
   if (!response.ok) {
-    // TODO: Handle non-ok cases from /api/auth-service/sign-up
+    const data = await response.json();  // TODO: Not typed!
+    const signUpErrors: SignUpErrors = {
+      service: data.message
+    }
+    return { errors: signUpErrors }
   }
 
   // Create user session

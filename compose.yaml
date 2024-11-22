@@ -6,6 +6,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    environment:
+      - GATEWAY_URL=http://gateway
 
   auth-service:
     build: ./services/auth-service
@@ -24,15 +26,15 @@ services:
     volumes:
       - auth-service-db-vol:/data/db
 
-  user-service:
-    build: ./services/user-service
-    ports:
-      - 4001:4001
-    volumes:
-      - ./services/user-service:/app
-      - /app/node_modules
-    environment:
-      - PORT=4001
+  # user-service:
+  #   build: ./services/user-service
+  #   ports:
+  #     - 4001:4001
+  #   volumes:
+  #     - ./services/user-service:/app
+  #     - /app/node_modules
+  #   environment:
+  #     - PORT=4001
 
   gateway:
     build: ./gateway

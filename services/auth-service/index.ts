@@ -11,9 +11,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // TODO: Implement login route
-app.post('/login', (req: Request, res: Response) => {
-    res.status(200).json({ message: "POST /login" });
-});
+app.post('/login', handleLogin);
 
 app.post('/sign-up', createUser);
 

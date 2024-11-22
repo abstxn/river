@@ -37,6 +37,33 @@ export async function createUser(req: Request, res: Response) {
 }
 
 export async function handleLogin(req: Request, res: Response) {
+  try {
+    const { username, password } = req.body;
+
+    // Check if passwordHash matches actual username's passwordHash
+    const claimedUser = await _getUserByUsername(username);
+    if (!claimedUser) {
+      res.status(401).json({ message: "User with username does not exist." });
+      return
+    }
+
+    // Check if the password provided is correct
+    const isValidPassword = bcrypt.compareSync(password, claimedUser.passwordHash);
+    if (!isValidPassword) {
+      res.status(401).json({ message: "Incorrect password." });
+      return
+    }
+
+    // If user exists and password matches, return ok
+    res.status(200).json({
+      message: "Successfully logged in.",
+      data: formatUserDocument(claimedUser)
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Unhandled error when creating user." });
+  }
 }
 
 export function formatUserDocument(user: UserModelInterface) {

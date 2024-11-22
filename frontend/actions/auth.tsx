@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import { SignupFormSchema, FormState } from "@/lib/definitions";
 import { createSession } from "@/lib/session";
-import bcrypt from 'bcryptjs';
 
 type SignUpErrors = {
   username?: string[] | undefined;
@@ -13,9 +12,6 @@ type SignUpErrors = {
 }
 
 export async function signUp(state: FormState, formData: FormData) {
-
-  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
-
   // Validate fields
   const validatedFields = SignupFormSchema.safeParse({
     username: formData.get('username'),
@@ -29,19 +25,13 @@ export async function signUp(state: FormState, formData: FormData) {
     return { errors: signUpErrors };
   }
 
-  // Hash the password
-  const salt = bcrypt.genSaltSync(10)
-  const passwordHash = bcrypt.hashSync(validatedFields.data.password, salt);
-
   // Make a call to auth-service to sign up
-  const username = validatedFields.data.username;
-  const email = validatedFields.data.email;
   const response = await fetch(
     `${process.env.GATEWAY_URL}/api/auth-service/sign-up`,
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ username, email, passwordHash })
+      body: JSON.stringify(validatedFields.data)
     });
 
   // Handle unhappy routes

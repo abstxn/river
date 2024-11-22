@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import {
   createUser as _createUser,
   getUserByUsername as _getUserByUsername,
@@ -8,7 +9,7 @@ import { UserModelInterface } from "../model/user-model";
 
 export async function createUser(req: Request, res: Response) {
   try {
-    const { username, email, passwordHash } = req.body;
+    const { username, email, password } = req.body;
 
     // Check for existing users associated with username or email
     const usernameExists = Boolean(await _getUserByUsername(username));
@@ -17,6 +18,10 @@ export async function createUser(req: Request, res: Response) {
       res.status(409).json({ message: "Username and/or email already exist." });
       return
     }
+
+    // Hash the password
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHash = bcrypt.hashSync(password, salt);
 
     // If no existing users associated with username or email, create new user
     const createdUser = await _createUser(username, email, passwordHash);

@@ -13,6 +13,9 @@ export default function NavBar() {
           <Link href="/">
             <span className="hover:text-gray-400">Home</span>
           </Link>
+          <Link href="/feed">
+            <span className="hover:text-gray-400">Stream</span>
+          </Link>
           <Link href="/login">
             <span className="hover:text-gray-400">Login</span>
           </Link>

@@ -26,6 +26,36 @@ services:
     volumes:
       - auth-service-db-vol:/data/db
 
+  confluence-service:
+    build: ./services/confluence-service
+    ports:
+      - 4010:4010
+    volumes:
+      - ./services/confluence-service:/app
+      - /app/node_modules
+    environment:
+      - PORT=4010
+
+  distributary-service:
+    build: ./services/distributary-service
+    ports:
+      - 4011:4011
+    volumes:
+      - ./services/distributary-service:/app
+      - /app/node_modules
+    environment:
+      - PORT=4011
+
+  redis-broker-service:
+    image: redis/redis-stack:latest
+    container_name: redis-broker-service
+    ports:
+      - 4020:6379
+      - 8001:8001  # for Redis Insight
+    volumes:
+      - redis-broker-service-vol:/data  # TODO: Check if this is correct
+
+
   # user-service:
   #   build: ./services/user-service
   #   ports:
@@ -43,3 +73,4 @@ services:
 
 volumes:
   auth-service-db-vol:
+  redis-broker-service-vol:

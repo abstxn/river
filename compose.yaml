@@ -35,6 +35,8 @@ services:
       - /app/node_modules
     environment:
       - PORT=4010
+      - REDIS_HOST=redis-broker-service
+      - REDIS_PORT=6379
 
   distributary-service:
     build: ./services/distributary-service
@@ -45,12 +47,14 @@ services:
       - /app/node_modules
     environment:
       - PORT=4011
+      - REDIS_HOST=redis-broker-service
+      - REDIS_PORT=6379
 
   redis-broker-service:
     image: redis/redis-stack:latest
     container_name: redis-broker-service
     ports:
-      - 4020:6379
+      - 6379:6379
       - 8001:8001  # for Redis Insight
     volumes:
       - redis-broker-service-vol:/data  # TODO: Check if this is correct

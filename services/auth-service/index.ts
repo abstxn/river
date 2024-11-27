@@ -10,7 +10,6 @@ app.get('/', (req: Request, res: Response) => {
     res.status(200).json({ message: "You have reached auth-service." })
 });
 
-// TODO: Implement login route
 app.post('/login', handleLogin);
 
 app.post('/sign-up', createUser);
